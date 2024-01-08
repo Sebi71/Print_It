@@ -1,3 +1,4 @@
+// Table img
 const slides = [
 	{
 		"image":"slide1.jpg",
@@ -16,3 +17,14 @@ const slides = [
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
 ]
+
+// Arrow Left and Right
+const arrowLeft = document.querySelector(".arrow_left")
+arrowLeft.addEventListener ("click", () => {
+	console.log("Vous avez cliqué sur la flèche de gauche")
+});
+
+const arrowRight = document.querySelector(".arrow_right")
+arrowRight.addEventListener ("click", () => {
+	console.log("Vous avez cliqué sur la flèche de droite")
+});
