@@ -33,6 +33,17 @@ let indexSlide = 0  //index slide default
 const nbSlide = slides.length  //number slide
 console.log(nbSlide)
 
+// Update Dot_selected
+const updateDotSelected = (update) => {						//class dot_selected update function
+	const dotSelected = document.querySelectorAll(".dot")	//element selection with class dot
+	dotSelected.forEach((dot, i) => {						//loop that loops through all selected elements
+        dot.classList.add("dot_selected");					//add dot_selected
+        if (i !== indexSlide) {								//instruction if for i different indexSlide
+            dot.classList.remove("dot_selected");			//remove class dot_selected
+        }
+    });	
+}
+
 		// Elements arrows
 // Arrow Left
 arrowLeft.addEventListener ("click", () => {
@@ -59,24 +70,24 @@ for (i=0; i < nbSlide; i ++) {					//instruction for
 
 
 		// Elements slide
-// Change slide left
-arrowLeft.onclick = function() {
-	indexSlide --;
-	if (indexSlide < 0) {
-		indexSlide = nbSlide -1;
-	}
-	bannerImg.src = `./assets/images/slideshow/${slides[indexSlide].image}`;
-	bannerText.innerHTML = slides[indexSlide].tagLine;
-}
-
 // Change slide right
-arrowRight.onclick = function() {
-	indexSlide ++;
-	if (indexSlide > nbSlide -1) {
+arrowRight.onclick = function() {				//function for click right arrow
+	indexSlide ++;								//slide next
+	if (indexSlide > nbSlide -1) {				//return to first slide if indexSlide > slide number
 		indexSlide = 0;
 	}
-	bannerImg.src = `./assets/images/slideshow/${slides[indexSlide].image}`;
-	bannerText.innerHTML = slides[indexSlide].tagLine;
-	
+	bannerImg.src = `./assets/images/slideshow/${slides[indexSlide].image}`; //image path
+	bannerText.innerHTML = slides[indexSlide].tagLine;						 //text path
+	updateDotSelected();
+}
 
+// Change slide left
+arrowLeft.onclick = function() {				//function for click left arrow
+	indexSlide --;								//slide back
+	if (indexSlide < 0) {						//return to last slide if indexSlide < 0			
+		indexSlide = nbSlide -1;
+	}
+	bannerImg.src = `./assets/images/slideshow/${slides[indexSlide].image}`; //image path
+	bannerText.innerHTML = slides[indexSlide].tagLine;						 //text path
+	updateDotSelected();
 }
