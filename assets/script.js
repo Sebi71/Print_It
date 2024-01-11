@@ -19,23 +19,23 @@ const slides = [
 ]
 		// Reusable variables
 // Arrows
-const arrowLeft = document.querySelector(".arrow_left")  
-const arrowRight = document.querySelector(".arrow_right")
+const arrowLeft = document.querySelector(".arrow_left");  
+const arrowRight = document.querySelector(".arrow_right");
 
 // Dots
-const parentDot = document.querySelector(".dots")
+const parentDot = document.querySelector(".dots");
 
 // Slides
-const bannerImg = document.querySelector(".banner-img")
-const bannerText = document.querySelector("#banner p")
+const bannerImg = document.querySelector(".banner-img");
+const bannerText = document.querySelector("#banner p");
 
-let indexSlide = 0  //index slide default
-const nbSlide = slides.length  //number slide
-console.log(nbSlide)
+let indexSlide = 0;  //index slide default
+const nbSlide = slides.length;  //number slide
+console.log(nbSlide);
 
 // Update Dot_selected
-const updateDotSelected = (update) => {						//class dot_selected update function
-	const dotSelected = document.querySelectorAll(".dot")	//element selection with class dot
+const updateDotSelected = () => {						//class dot_selected update function
+	const dotSelected = document.querySelectorAll(".dot");	//element selection with class dot
 	dotSelected.forEach((dot, i) => {						//loop that loops through all selected elements
         dot.classList.add("dot_selected");					//add dot_selected
         if (i !== indexSlide) {								//instruction if for i different indexSlide
@@ -63,7 +63,7 @@ for (i=0; i < nbSlide; i ++) {					//instruction for
 	parentDot.appendChild(dot);					//add a nod as last child
 	dot.classList.add("dot"); 					//add class dot to div
 	if(i === indexSlide) {						//instruction if for full bullet point
-		dot.classList.add("dot_selected") 		//add class dot_selected to div
+		dot.classList.add("dot_selected"); 		//add class dot_selected to div
 	}
 	console.log(i);
 }
@@ -71,23 +71,25 @@ for (i=0; i < nbSlide; i ++) {					//instruction for
 
 		// Elements slide
 // Change slide right
-arrowRight.onclick = function() {				//function for click right arrow
+arrowRight.onclick = () => {				//function for click right arrow
 	indexSlide ++;								//slide next
 	if (indexSlide > nbSlide -1) {				//return to first slide if indexSlide > slide number
 		indexSlide = 0;
 	}
 	bannerImg.src = `./assets/images/slideshow/${slides[indexSlide].image}`; //image path
 	bannerText.innerHTML = slides[indexSlide].tagLine;						 //text path
-	updateDotSelected();
+	updateDotSelected();													 //function callback
+	console.log("slide suivante");
 }
 
 // Change slide left
-arrowLeft.onclick = function() {				//function for click left arrow
+arrowLeft.onclick = () => {				//function for click left arrow
 	indexSlide --;								//slide back
 	if (indexSlide < 0) {						//return to last slide if indexSlide < 0			
 		indexSlide = nbSlide -1;
 	}
 	bannerImg.src = `./assets/images/slideshow/${slides[indexSlide].image}`; //image path
 	bannerText.innerHTML = slides[indexSlide].tagLine;						 //text path
-	updateDotSelected();
+	updateDotSelected();													 //function callback
+	console.log("slide précédente");
 }
