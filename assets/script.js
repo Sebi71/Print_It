@@ -1,3 +1,7 @@
+/* ** */
+/* DECLARATION OF GLOBAL VARIABLES */
+/* ** */
+
 // Table img
 const slides = [
 	{
@@ -17,79 +21,83 @@ const slides = [
 		"tagLine":"Autocollants <span>avec découpe laser sur mesure</span>"
 	}
 ]
-		// Reusable variables
-// Arrows
+
+// Arrows path
 const arrowLeft = document.querySelector(".arrow_left");  
 const arrowRight = document.querySelector(".arrow_right");
 
-// Dots
+// Dots path
 const parentDot = document.querySelector(".dots");
 
-// Slides
+// Slides path
 const bannerImg = document.querySelector(".banner-img");
 const bannerText = document.querySelector("#banner p");
 
 let indexSlide = 0;  //index slide default
 const nbSlide = slides.length;  //number slide
-console.log(nbSlide);
+
+
+/* ** */
+/* DECLARATION OF FUNCTIONS */
+/* ** */
 
 // Update Dot_selected
-const updateDotSelected = () => {						//class dot_selected update function
-	const dotSelected = document.querySelectorAll(".dot");	//element selection with class dot
-	dotSelected.forEach((dot, i) => {						//loop that loops through all selected elements
-        dot.classList.add("dot_selected");					//add dot_selected
-        if (i !== indexSlide) {								//instruction if for i different indexSlide
-            dot.classList.remove("dot_selected");			//remove class dot_selected
-        }
+const updateDotSelected = () => {						
+	const dots = document.querySelectorAll(".dot");		//selection class "dot"
+	dots.forEach((dot, i) => {						
+        if (i === indexSlide) {								
+            dot.classList.add("dot_selected");		//add "dot_selected" if i = indexSlide			
+        } else {
+			if (dot.classList.contains("dot_selected")) {
+				dot.classList.remove("dot_selected") 	//remove "dot_selected" if "dot_selected" present
+			}
+		}
     });	
 }
 
-		// Elements arrows
-// Arrow Left
-arrowLeft.addEventListener ("click", () => {
-	console.log("Vous avez cliqué sur la flèche de gauche");  //listen arrow left
-});
-
-//Arrow Right
-arrowRight.addEventListener ("click", () => {
-	console.log("Vous avez cliqué sur la flèche de droite");  //listen arrow right
-});
-
-
-		// Elements dots
-// Add bullet point
-for (i=0; i < nbSlide; i ++) {					//instruction for
-	const dot = document.createElement("div"); 	//create element div
-	parentDot.appendChild(dot);					//add a nod as last child
-	dot.classList.add("dot"); 					//add class dot to div
-	if(i === indexSlide) {						//instruction if for full bullet point
-		dot.classList.add("dot_selected"); 		//add class dot_selected to div
-	}
-	console.log(i);
+// Update current slide
+const updateSlide = () => {
+	bannerImg.src = `./assets/images/slideshow/${slides[indexSlide].image}`; 
+	bannerText.innerHTML = slides[indexSlide].tagLine;						
+	updateDotSelected();	//function callback					
 }
 
-
-		// Elements slide
-// Change slide right
-arrowRight.onclick = () => {				//function for click right arrow
-	indexSlide ++;								//slide next
-	if (indexSlide > nbSlide -1) {				//return to first slide if indexSlide > slide number
+/* ** */
+/* DECLARATION OF EVENT LISTENERS */
+/* ** */
+		
+// Elements slide
+// Change slide right with function addEventListener click
+arrowRight.addEventListener ("click", () => {	
+	indexSlide ++;		//incrementation								
+	if (indexSlide > nbSlide -1) {	//return to first slide if indexSlide > slide number		
 		indexSlide = 0;
 	}
-	bannerImg.src = `./assets/images/slideshow/${slides[indexSlide].image}`; //image path
-	bannerText.innerHTML = slides[indexSlide].tagLine;						 //text path
-	updateDotSelected();													 //function callback
-	console.log("slide suivante");
-}
+	updateSlide();	//function callback								 
+})
 
-// Change slide left
-arrowLeft.onclick = () => {				//function for click left arrow
-	indexSlide --;								//slide back
-	if (indexSlide < 0) {						//return to last slide if indexSlide < 0			
+// Change slide left with function addEventListener click
+arrowLeft.addEventListener ("click", () => {		
+	indexSlide --;		//decrementation						
+	if (indexSlide < 0) {	//return to last slide if indexSlide < 0									
 		indexSlide = nbSlide -1;
 	}
-	bannerImg.src = `./assets/images/slideshow/${slides[indexSlide].image}`; //image path
-	bannerText.innerHTML = slides[indexSlide].tagLine;						 //text path
-	updateDotSelected();													 //function callback
-	console.log("slide précédente");
+	updateSlide()	//function callback											
+})
+
+
+
+/* ** */
+/* CODE SEQUENCE */
+/* ** */
+
+// Elements dots
+// Add bullet point
+for (i=0; i < nbSlide; i ++) {					
+	const dot = document.createElement("div"); 	//create element div
+	dot.classList.add("dot");	//add class "dot" to div
+	if(i === indexSlide) {						
+		dot.classList.add("dot_selected");	//add class "dot_selected" to div if i = indexSlide
+	}
+	parentDot.appendChild(dot); 	//add "dot" to the container
 }
